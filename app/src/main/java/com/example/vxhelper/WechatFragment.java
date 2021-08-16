@@ -64,7 +64,6 @@ public class WechatFragment extends Fragment {
                     case R.id.action_add: {
                         Intent intent = new Intent(AppContext.getAppContext(), uesrAddActivity.class);
                         startActivity(intent);
-                        Toast.makeText(AppContext.getAppContext(), "click user add", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.menu_open_setting:
@@ -75,7 +74,8 @@ public class WechatFragment extends Fragment {
 
                         break;
                     case R.id.editable:
-                        editAble = item.isChecked();
+                        editAble = !editAble;
+                        item.setChecked(editAble);
                         break;
                     default:
                         break;
@@ -86,8 +86,4 @@ public class WechatFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.wechat_menu, menu);
-    }
 }

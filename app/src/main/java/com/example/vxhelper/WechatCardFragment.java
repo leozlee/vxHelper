@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class WechatCardFragment extends Fragment {
     private static final String ARG_COUNT = "param1";
     private Integer counter;
+    private RecyclerView recyclerView;
+
 
     public static WechatCardFragment newInstance(Integer counter) {
         WechatCardFragment fragment = new WechatCardFragment();
