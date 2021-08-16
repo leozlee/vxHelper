@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/host_fragment"
-        android:name="com.example.vxhelper.WechatFragment"
+        android:name="com.example.vxhelper.WechatMainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -8,6 +8,9 @@ public class WechatFragmentAdapter extends FragmentStateAdapter {
 
     private final int ItemCount = 2;
 
+    static final int VIDEO_TAB = 0;
+    static final int PHOTO_TAB = 1;
+
 
     public WechatFragmentAdapter(@NonNull Fragment fragment) {
         super(fragment);
@@ -16,8 +19,12 @@ public class WechatFragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return WechatCardFragment.newInstance(position);
-
+        switch (position) {
+            case VIDEO_TAB:
+                return new WechatCallFragment();
+            default:
+                return new WechatPhotoFragment();
+        }
     }
 
     @Override

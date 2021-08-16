@@ -23,13 +23,13 @@
         </activity>
 
 
-        <activity android:name=".uesrAddActivity">
+        <activity android:name=".UserAddActivity">
 
         </activity>
 
 
         <service
-            android:name=".wechatCallAs"
+            android:name=".WechatCallAs"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
         </service>
     </application>

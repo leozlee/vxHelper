@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
 import android.view.accessibility.AccessibilityEvent;
 
-public class wechatCallAs extends AccessibilityService {
+public class WechatCallAs extends AccessibilityService {
     private static final String TAG = "wechatCallAs";
 
 

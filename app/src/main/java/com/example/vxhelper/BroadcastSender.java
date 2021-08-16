@@ -1,6 +1,5 @@
 package com.example.vxhelper;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,12 +7,12 @@ import android.content.Intent;
 import android.widget.Toast;
 
 
-public class BroadSender {
+public class BroadcastSender {
 
     public static void oneKey(Context context, String username, boolean videoEnable) {
         try {
             // 启动监听
-            Intent intent = new Intent(context, wechatCallAs.class);
+            Intent intent = new Intent(context, WechatCallAs.class);
             intent.putExtra("username", username);
             intent.putExtra("videoEnable", videoEnable);
             context.startService(intent);
