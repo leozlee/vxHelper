@@ -1,23 +1,24 @@
-package com.example.vxhelper;
+package com.example.vxhelper.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vxhelper.R;
+
 import java.util.List;
 
-public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHolder> {
-    private static String TAG = "UserViewAdapter";
+public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+    private static String TAG = "CallAdapter";
 
     private List<String> mData;
 
-    public UserViewAdapter(List<String> data) {
+    public PhotoAdapter(List<String> data) {
         this.mData = data;
         Log.d("UserViewAdapter", "----------------------------------UserViewAdapter");
 
@@ -27,7 +28,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_view, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,7 +49,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.iv_user);
+            textView = itemView.findViewById(R.id.iv_userID);
         }
 
         public TextView getTextView() {

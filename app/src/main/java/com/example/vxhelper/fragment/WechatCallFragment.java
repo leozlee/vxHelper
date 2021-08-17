@@ -1,4 +1,4 @@
-package com.example.vxhelper;
+package com.example.vxhelper.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,31 +9,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.vxhelper.AppContext;
+import com.example.vxhelper.R;
+import com.example.vxhelper.adapter.CallAdapter;
+import com.tencent.mmkv.MMKV;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WechatPhotoFragment extends Fragment {
+public class WechatCallFragment extends Fragment {
 
     private static String TAG = "WechatTabFragment";
 
     private static final String ARG_COUNT = "param1";
     private Integer counter;
     private RecyclerView recyclerView;
-    private UserViewAdapter userViewAdapter;
+    private CallAdapter callAdapter;
     private List<String> userDataList;
 
-//    public static WechatTabFragment newInstance(Integer counter) {
-//        WechatTabFragment fragment = new WechatTabFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COUNT, counter);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
-    public WechatPhotoFragment() {
+    public WechatCallFragment() {
     }
 
     @Override
@@ -43,18 +41,21 @@ public class WechatPhotoFragment extends Fragment {
             counter = getArguments().getInt(ARG_COUNT);
         }
 
-        Log.d(TAG, "WechatTabFragment create..........");
+        Log.d(TAG, "WechatCallFragment create..........");
+
+
+        MMKV kv = MMKV.defaultMMKV();
 
         userDataList = new ArrayList<>();
-        userDataList.add("daliangzi");
-        userDataList.add("loo---");
-        userDataList.add("lll");
+        userDataList.add("lizhihao");
+        userDataList.add("loo");
+        userDataList.add("see");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.wechat_tab, container, false);
+        View root = inflater.inflate(R.layout.wechat_call_tab, container, false);
         return root;
     }
 
@@ -62,10 +63,11 @@ public class WechatPhotoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycle_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(AppContext.getAppContext(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        userViewAdapter = new UserViewAdapter(userDataList);
-        recyclerView.setAdapter(userViewAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(AppContext.getAppContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        callAdapter = new CallAdapter(userDataList);
+        recyclerView.setAdapter(callAdapter);
     }
 
 

@@ -2,10 +2,11 @@ package com.example.vxhelper;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toolbar;
+import android.view.View;
+import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 
