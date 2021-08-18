@@ -1,5 +1,6 @@
 package com.example.vxhelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -23,13 +24,13 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
     private Switch sw_vv;
     private EditText et_username;
     private ImageButton imgBtn;
+    private Switch sw_photo;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_add);
-
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.tb_useradd);
         setSupportActionBar(toolbar);
@@ -45,15 +46,26 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
         imgBtn = findViewById(R.id.btn_image);
         imgBtn.setOnClickListener(this);
         sw_vv = findViewById(R.id.sw_voice_video);
+        sw_photo = findViewById(R.id.sw_photo);
         et_username = findViewById(R.id.tv_username);
 
     }
 
 
+    private void complete() {
+        if (!validate()) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra("name", et_username.getText());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+
     private boolean validate() {
-        String name = et_username.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(AppContext.getAppContext(), "请输入微信昵称", Toast.LENGTH_SHORT).show();
+        if (et_username.getText().equals("")) {
+            Toast.makeText(AppContext.getAppContext(), "请输入正确的微信用户名称", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -76,6 +88,7 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_test:
                 break;
             case R.id.btn_passed:
+                complete();
                 break;
             case R.id.btn_image:
                 break;
@@ -84,4 +97,5 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+
 }

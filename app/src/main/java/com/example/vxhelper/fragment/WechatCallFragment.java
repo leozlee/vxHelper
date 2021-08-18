@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vxhelper.AppContext;
+import com.example.vxhelper.DataViewModel;
 import com.example.vxhelper.R;
 import com.example.vxhelper.adapter.CallAdapter;
 import com.tencent.mmkv.MMKV;
@@ -28,11 +32,13 @@ public class WechatCallFragment extends Fragment {
     private Integer counter;
     private RecyclerView recyclerView;
     private CallAdapter callAdapter;
-    private List<String> userDataList;
+    //private List<String> userDataList;
 
+    private DataViewModel dataViewModel;
 
     public WechatCallFragment() {
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,15 +47,17 @@ public class WechatCallFragment extends Fragment {
             counter = getArguments().getInt(ARG_COUNT);
         }
 
-        Log.d(TAG, "WechatCallFragment create..........");
+        dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
 
+        final Observer<List<String>> nameObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                callAdapter.notifyDataSetChanged();
+            }
+        };
 
+        dataViewModel.getData().observe(this, nameObserver);
 
-
-        userDataList = new ArrayList<>();
-        userDataList.add("lizhihao");
-        userDataList.add("loo");
-        userDataList.add("see");
     }
 
     @Nullable
@@ -66,7 +74,7 @@ public class WechatCallFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(AppContext.getAppContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        callAdapter = new CallAdapter(userDataList);
+        callAdapter = new CallAdapter(dataViewModel.getData().getValue());
         recyclerView.setAdapter(callAdapter);
     }
 

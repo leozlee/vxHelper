@@ -12,13 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.vxhelper.AppContext;
+import com.example.vxhelper.DataViewModel;
 import com.example.vxhelper.R;
 import com.example.vxhelper.UserAddActivity;
 import com.example.vxhelper.adapter.WechatFragmentAdapter;
@@ -27,14 +33,16 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.tencent.mmkv.MMKV;
 
 public class WechatMainFragment extends Fragment {
-
-
     private static String TAG = "WechatMainFragment";
     private final String[] TabName = {"视频通话", "朋友圈"};
+
     private final int[] iconSelected = {R.drawable.voice_selector, R.drawable.camera_selector};
     private WechatFragmentAdapter adapter;
     private boolean editAble = false;
     MMKV kv = MMKV.defaultMMKV();
+    private ActivityResultLauncher<Intent> luncher;
+
+    private DataViewModel dataViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,11 +50,17 @@ public class WechatMainFragment extends Fragment {
         adapter = new WechatFragmentAdapter(this);
         editAble = kv.decodeBool("editable");
 
-        Log.d(TAG, "editAble is ++++++++++++++++++ " + editAble);
+        dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
 
+        luncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        dataViewModel.getData().getValue().add(result.getData().getStringExtra("name"));
 
+                    }
+                });
     }
-
 
     @Nullable
     @Override
@@ -55,8 +69,6 @@ public class WechatMainFragment extends Fragment {
         final TabLayout tabLayout = root.findViewById(R.id.tabs);
         ViewPager2 viewPager = root.findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
-
-
         new TabLayoutMediator(tabLayout, viewPager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
@@ -78,8 +90,7 @@ public class WechatMainFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_add: {
-                        Intent intent = new Intent(AppContext.getAppContext(), UserAddActivity.class);
-                        startActivity(intent);
+                        luncher.launch(new Intent(AppContext.getAppContext(), UserAddActivity.class));
                         break;
                     }
                     case R.id.menu_open_setting:
@@ -101,4 +112,6 @@ public class WechatMainFragment extends Fragment {
             }
         });
     }
+
+
 }
