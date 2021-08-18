@@ -44,7 +44,7 @@ public class WechatCallFragment extends Fragment {
         Log.d(TAG, "WechatCallFragment create..........");
 
 
-        MMKV kv = MMKV.defaultMMKV();
+
 
         userDataList = new ArrayList<>();
         userDataList.add("lizhihao");
