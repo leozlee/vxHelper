@@ -32,6 +32,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.tencent.mmkv.MMKV;
 
+import java.util.List;
+
 public class WechatMainFragment extends Fragment {
     private static String TAG = "WechatMainFragment";
     private final String[] TabName = {"视频通话", "朋友圈"};
@@ -56,8 +58,8 @@ public class WechatMainFragment extends Fragment {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        dataViewModel.getData().getValue().add(result.getData().getStringExtra("name"));
-
+                        String newPerson = result.getData().getStringExtra("name");
+                        dataViewModel.updateNewData(newPerson);
                     }
                 });
     }

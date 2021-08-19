@@ -57,7 +57,7 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra("name", et_username.getText());
+        intent.putExtra("name", et_username.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

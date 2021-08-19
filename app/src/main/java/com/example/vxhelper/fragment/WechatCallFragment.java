@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,9 +18,7 @@ import com.example.vxhelper.AppContext;
 import com.example.vxhelper.DataViewModel;
 import com.example.vxhelper.R;
 import com.example.vxhelper.adapter.CallAdapter;
-import com.tencent.mmkv.MMKV;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WechatCallFragment extends Fragment {
@@ -32,7 +29,6 @@ public class WechatCallFragment extends Fragment {
     private Integer counter;
     private RecyclerView recyclerView;
     private CallAdapter callAdapter;
-    //private List<String> userDataList;
 
     private DataViewModel dataViewModel;
 
@@ -53,6 +49,9 @@ public class WechatCallFragment extends Fragment {
             @Override
             public void onChanged(List<String> strings) {
                 callAdapter.notifyDataSetChanged();
+
+                Log.d(TAG, "11111111111111111111111111");
+
             }
         };
 

@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vxhelper.AppContext;
+import com.example.vxhelper.DataViewModel;
 import com.example.vxhelper.R;
 import com.example.vxhelper.adapter.CallAdapter;
 import com.example.vxhelper.adapter.PhotoAdapter;
@@ -28,7 +31,7 @@ public class WechatPhotoFragment extends Fragment {
     private Integer counter;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
-    private List<String> userDataList;
+    private DataViewModel dataViewModel;
 
 
     public WechatPhotoFragment() {
@@ -41,12 +44,18 @@ public class WechatPhotoFragment extends Fragment {
             counter = getArguments().getInt(ARG_COUNT);
         }
 
-        Log.d(TAG, "WechatTabFragment create..........");
+        dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
 
-        userDataList = new ArrayList<>();
-        userDataList.add("daliangzi");
-        userDataList.add("loo---");
-        userDataList.add("lll");
+        final Observer<List<String>> nameObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                photoAdapter.notifyDataSetChanged();
+                Log.d(TAG, "WechatPhotoFragment update ui0000000000000000000000");
+            }
+        };
+
+        dataViewModel.getData().observe(this, nameObserver);
+
     }
 
     @Nullable
@@ -62,7 +71,7 @@ public class WechatPhotoFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycle_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(AppContext.getAppContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        photoAdapter = new PhotoAdapter(userDataList);
+        photoAdapter = new PhotoAdapter(dataViewModel.getData().getValue());
         recyclerView.setAdapter(photoAdapter);
     }
 
