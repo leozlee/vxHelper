@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">微信助手</string>
     <string name="useradd_info">请输入微信用户名称,并且确保该用户在微信首页第一屏进入即可看到(建议使用微信"置顶聊天"功能)</string>
+    <string name="sw_video">默认语音通话,打开视频通话</string>
 </resources>

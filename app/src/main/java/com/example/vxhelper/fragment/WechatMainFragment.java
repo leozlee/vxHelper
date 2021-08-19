@@ -41,9 +41,8 @@ public class WechatMainFragment extends Fragment {
     private final int[] iconSelected = {R.drawable.voice_selector, R.drawable.camera_selector};
     private WechatFragmentAdapter adapter;
     private boolean editAble = false;
-    MMKV kv = MMKV.defaultMMKV();
-    private ActivityResultLauncher<Intent> luncher;
-
+    private MMKV kv = MMKV.defaultMMKV();
+    private ActivityResultLauncher<Intent> addActivityLuncher;
     private DataViewModel dataViewModel;
 
     @Override
@@ -53,8 +52,7 @@ public class WechatMainFragment extends Fragment {
         editAble = kv.decodeBool("editable");
 
         dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
-
-        luncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        addActivityLuncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
@@ -92,7 +90,7 @@ public class WechatMainFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_add: {
-                        luncher.launch(new Intent(AppContext.getAppContext(), UserAddActivity.class));
+                        addActivityLuncher.launch(new Intent(AppContext.getAppContext(), UserAddActivity.class));
                         break;
                     }
                     case R.id.menu_open_setting:
@@ -100,7 +98,6 @@ public class WechatMainFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case R.id.action_about:
-
                         break;
                     case R.id.editable:
                         editAble = !editAble;

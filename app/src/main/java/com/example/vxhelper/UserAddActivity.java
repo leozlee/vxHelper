@@ -21,6 +21,7 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button btn_test;
     private Button btn_pass;
+    private Button btn_delete;
     private Switch sw_vv;
     private EditText et_username;
     private ImageButton imgBtn;
@@ -34,8 +35,8 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.tb_useradd);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
-        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //添加默认的返回图标
+        getSupportActionBar().setHomeButtonEnabled(true);           //设置返回键可用
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
@@ -57,6 +58,7 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
         Intent intent = new Intent();
+        intent.putExtra("action", "add");
         intent.putExtra("name", et_username.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
@@ -69,6 +71,15 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
             return false;
         }
         return true;
+    }
+
+
+    private void deleteUser() {
+        Intent intent = new Intent();
+        intent.putExtra("action", "delete");
+        intent.putExtra("name", et_username.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 
@@ -91,6 +102,9 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
                 complete();
                 break;
             case R.id.btn_image:
+                break;
+            case R.id.btn_delete:
+                deleteUser();
                 break;
             default:
                 break;

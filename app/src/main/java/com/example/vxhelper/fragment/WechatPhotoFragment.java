@@ -26,9 +26,6 @@ import java.util.List;
 public class WechatPhotoFragment extends Fragment {
 
     private static String TAG = "WechatTabFragment";
-
-    private static final String ARG_COUNT = "param1";
-    private Integer counter;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
     private DataViewModel dataViewModel;
@@ -40,10 +37,6 @@ public class WechatPhotoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            counter = getArguments().getInt(ARG_COUNT);
-        }
-
         dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
 
         final Observer<List<String>> nameObserver = new Observer<List<String>>() {

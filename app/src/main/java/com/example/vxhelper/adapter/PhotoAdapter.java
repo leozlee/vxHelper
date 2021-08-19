@@ -15,13 +15,10 @@ import java.util.List;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
     private static String TAG = "CallAdapter";
-
     private List<String> mData;
 
     public PhotoAdapter(List<String> data) {
         this.mData = data;
-        Log.d("UserViewAdapter", "----------------------------------UserViewAdapter");
-
     }
 
     @NonNull
@@ -35,15 +32,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.getTextView().setText(mData.get(position));
-
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
-
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
 
