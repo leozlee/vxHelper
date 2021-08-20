@@ -1,5 +1,6 @@
 package com.example.vxhelper.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +60,11 @@ public class WechatCallFragment extends Fragment {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        String newPerson = result.getData().getStringExtra("name");
-                        dataViewModel.updateNewData(newPerson);
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            String newPerson = result.getData().getStringExtra("name");
+                            dataViewModel.deleteData(newPerson);
+                        }
+
                     }
                 });
     }
@@ -83,10 +87,13 @@ public class WechatCallFragment extends Fragment {
         recyclerView.setAdapter(callAdapter);
         callAdapter.setLister(new OnAdapterLongClickListener() {
             @Override
-            public void onItemLongClick(View view) {
-                Intent intent = new Intent(AppContext.getAppContext(), UserAddActivity.class);
-
-                Luncher.launch(intent);
+            public void onItemLongClick(int position) {
+                if (kv.decodeBool("editable")) {
+                    Intent intent = new Intent(AppContext.getAppContext(), UserAddActivity.class);
+                    intent.putExtra("name", dataViewModel.getData().getValue().get(position));
+                    Log.d(TAG, "value is " + dataViewModel.getData().getValue().get(position));
+                    Luncher.launch(intent);
+                }
             }
         });
     }

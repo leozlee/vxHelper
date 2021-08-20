@@ -19,8 +19,14 @@ public class DataViewModel extends ViewModel {
     }
 
 
-    public void updateNewData(String value) {
+    public void insertData(String value) {
         useList.getValue().add(value);
+        useList.postValue(useList.getValue());
+    }
+
+
+    public void deleteData(String value) {
+        useList.getValue().remove(value);
         useList.postValue(useList.getValue());
     }
 

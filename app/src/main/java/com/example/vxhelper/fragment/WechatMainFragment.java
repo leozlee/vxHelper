@@ -1,13 +1,10 @@
 package com.example.vxhelper.fragment;
 
-import android.content.ClipData;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +29,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.tencent.mmkv.MMKV;
 
-import java.util.List;
-
 public class WechatMainFragment extends Fragment {
     private static String TAG = "WechatMainFragment";
     private final String[] TabName = {"视频通话", "朋友圈"};
@@ -56,8 +51,11 @@ public class WechatMainFragment extends Fragment {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        String newPerson = result.getData().getStringExtra("name");
-                        dataViewModel.updateNewData(newPerson);
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            String newPerson = result.getData().getStringExtra("name");
+                            dataViewModel.insertData(newPerson);
+                        }
+
                     }
                 });
     }

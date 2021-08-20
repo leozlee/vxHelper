@@ -49,6 +49,14 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
         sw_vv = findViewById(R.id.sw_voice_video);
         sw_photo = findViewById(R.id.sw_photo);
         et_username = findViewById(R.id.tv_username);
+        btn_delete = findViewById(R.id.btn_delete);
+        btn_delete.setOnClickListener(this);
+        Intent intent = getIntent();
+        if (intent.getStringExtra("name") != null && !intent.getStringExtra("name").equals("")) {
+            et_username.setText(intent.getStringExtra("name"));
+            btn_delete.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -66,7 +74,7 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private boolean validate() {
-        if (et_username.getText().equals("")) {
+        if (et_username.getText().toString().equals("")) {
             Toast.makeText(AppContext.getAppContext(), "请输入正确的微信用户名称", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -109,7 +117,11 @@ public class UserAddActivity extends AppCompatActivity implements View.OnClickLi
             default:
                 break;
         }
-
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
