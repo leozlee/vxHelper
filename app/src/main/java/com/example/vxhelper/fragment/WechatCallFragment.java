@@ -62,7 +62,13 @@ public class WechatCallFragment extends Fragment {
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             String newPerson = result.getData().getStringExtra("name");
-                            dataViewModel.deleteData(newPerson);
+                            Log.d(TAG, "----------------" + newPerson);
+                            if (result.getData().getStringExtra("action").equals("delete")) {
+                                dataViewModel.deleteData(newPerson);
+                            } else if (result.getData().getStringExtra("action").equals("renew")) {
+                                dataViewModel.insertData(newPerson);
+                                dataViewModel.deleteData(result.getData().getStringExtra("oldName"));
+                            }
                         }
 
                     }
